@@ -1,0 +1,27 @@
+Servlets
+	javax.servlet -> Forma de interactuar de JEE
+
+		Son clases de java que reciben una petición, la procesan, y retornan un resultado al cliente o aplicación que lo solicita.
+		Son la base de comunicación cliente - servidor en implementaciones web.
+		
+		- Un Web Servlet, utiliza clases específicas para el manejo de peticiones HTTP
+		- Por cada tipo de petición, se debe definir un servelt específico.
+		- Se declaran en un archivo XML que sirve como mapper de peticiones (WEB-INF/web.xml)
+
+Apache - TomCat
+	Servidor Web
+		Tomcat es un proyecto Open Source que implementa Web Servers y contenedores de servlets.
+
+Spring
+	Framework para JEE, es una implementación de y colección de clases, métodos y configuraciones, para la creación de 
+	aplicaciones empresariales en base a Java EE moderno.
+	
+	Prioriza la estructura modular y la comunicación entre componentes, para mantener el foco en el desarrollo de la lógica.
+
+	Algunas características
+		- Facilita la implementación de capas lógicas, garantizando su independencia debido a su modularidad.
+		- Utiliza inyección de dependencias para administrar las instancias de los componentes lógicos que interconectan capas.
+		- Facilita la conexión y manipulación de datos a través de componentes DAO, JDBC, y ORM's como Hibernate.
+
+Dispatcher Servlet
+	Cabeza de Spring, recibe la petición y se encarga de devolver al cliente, solo sabe delegar cosas

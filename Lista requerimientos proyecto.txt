@@ -1,0 +1,23 @@
+General
+* Generador de QR
+* Inicio de sesión Google
+
+Admin
+	* Registro de casa
+	* Registro de residentes
+	* Visualizar, Agregar y Eliminar de lista negra
+	* Visuaslizar flujo de entrada Visita/Residente (Grafica) (General y por casa)
+	* Revocar acceso
+	
+* Visualizar horarios de visita
+* 30 minutos de gracia
+Residentes
+	2 Visitas vehiculares maximo a la vez (no hay limite?)
+	Ilimitados visitantes peatonales
+
+	Encargado (Ilimitados)
+		* Crear visitas
+			* Crear rutinas
+		* Aprobar visitas
+	Otros
+		* Solicitar visitas al encargado

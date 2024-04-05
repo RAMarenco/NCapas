@@ -1,0 +1,54 @@
+Problema de seguridad (vigilantes malos)
+Hay gente mayor y niños
+
+Aplicacion para controlar porton, ya hay pluma, se debe controlar de forma automatica
+RFID no hay presupuesto, hay tablet y computadora
+Debe permitir generar una identificacion por medio del telefono (QR preferiblemente), la tablet debe escanearlo para asi dar paso
+Llevar registro de las entradas que se han hecho (residentes y visitas), control por residente
+	Registro privado, cada residente solo puede ver sus registros
+		Cada persona de una casa debe tener una identificacion, se les debe asociar la casa
+QR de un solo uso (5 a 10 minutos)
+Debe existir un metodo manual para ingreso
+Poder declarar visitantes (el residente debe hacerlo)
+Limite de hora para visitantes (10pm)
+	Puede permitir el ingreso pero queda a consideracion del vigilante
+		Genera el proceso de visita pero se debe preguntar al vigilante si está disponible o no
+2 (Parqueo) visitantes por casa a la vez
+Lista blanca/negra de acceso
+	Cae notificacion al administrador
+	Residentes deben abrir la pluma manualmente
+Poder generar rutinas de visitas
+
+Visitas unicas o recurrentes
+
+Responsable por residencia
+	Los demas no tienen esos privilegios
+
+Invitacion->Responsable->Aprobada->Notificacion
+
+Administrador:
+	Puede revocar acceso
+	Flujo de entrada de vehiculos (cuantos son residentes/visitantes)
+		Poder visualizarlo en grafica
+	Funcionalidad para agregar usuario
+		Casas ya registradas
+			Se le agrega los dueños
+	Puede gestionar casas
+		Generar visitas
+	Tiene acceso a lista negra para visualizar, agregar y eliminar usuarios de esta
+
+Los visitantes se deben registrar
+	Google
+		Correo
+
+No hay limite de residentes por casa
+
+Tipos de invitacion ((Peatonal ilimitados)/(Vehicular 2 maximo))
+	QR por tipo de invitacion
+
+Multa de $200 por cada carro extra del residente
+
+Web/Responsive (se puede considerar movil (evaluar))
+
+Se debe guardar registro de que vigilante escaneo el qr
+

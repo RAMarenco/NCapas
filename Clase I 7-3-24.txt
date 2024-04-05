@@ -1,0 +1,13 @@
+Streams (Colecciones)
+	foreach
+	map
+	reduce
+	any
+
+Lambdas (HOF)
+
+Design Patterns
+	Singleton
+	Builder
+	Decorator
+	Dependency Injection

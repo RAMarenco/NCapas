@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library</title>
+</head>
+<body>
+    <a href="/library/all"> Ver todos los libros </a>
+    <form action="#" id="save-book-form">
+        <label>
+            ISBN
+            <input name="ISBN" id="isbn-field"/>
+        </label>
+        <label>
+            Titulo
+            <input name="title" id="title-field"/>
+        </label>
+        <input type="submit" value="Guardar libro"/>
+    </form>
+    <table>
+        <thead>
+        <tr>
+            <th> ISBN </th>
+            <th> Title </th>
+        </tr>
+        </thead>
+        <tbody id="books-container">
+        <!--{{#books}}
+        <tr>
+            <td> {{ISBN}} </td>
+            <td> {{title}} </td>
+        </tr>
+        {{/books}}-->
+        </tbody>
+    </table>
+    <script>
+        const form = document.querySelector("#save-book-form");
+        const table = document.querySelector("#books-container")
+
+        const createBookChild = (info) => {
+            const holder = document.createElement("tr");
+            holder.innerHTML = `
+                <td> ${info.isbn} </td>
+                <td> ${info.title} </td>
+            `;
+
+            return holder;
+        }
+
+        const fetchBooks = async () => {
+            const response = await fetch("/api/library/all");
+            return await response.json();
+        }
+
+        const renderBooks = async () => {
+            const books = await fetchBooks() || [];
+            table.innerHTML = "";
+
+            books.forEach(b => {
+                table.appendChild(
+                    createBookChild(b)
+                )
+            })
+        }
+
+        const saveBook = async () => {
+            const data = new FormData(form);
+
+            const book = {
+                isbn: data.get("ISBN"),
+                title: data.get("title")
+            }
+
+            const response = await fetch("/api/library/save", {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                method: "POST",
+                body: JSON.stringify(book),
+            })
+
+            if (response.ok) {
+                await renderBooks();
+            } else {
+                alert("Error :c");
+            }
+        }
+
+        const main = () => {
+            renderBooks();
+
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                saveBook()
+            });
+        }
+
+        main();
+    </script>
+</body>
+</html>

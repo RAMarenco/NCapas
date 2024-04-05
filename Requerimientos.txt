@@ -1,0 +1,36 @@
+Generador de QR
+	Generar un QR automaticamente para un residente/visitante
+	Tiempo de validez de 10 minutos
+	Generar otro QR posterior al vencimiento de un QR
+
+Registro de Usuario
+	Crear cuenta
+
+Inicio de sesión Google
+	Inicio de sesion mediante correo electronico de google
+	
+Administrador
+	Registro de casa
+		Registrar numero y direccion de casa
+	Registro de residentes
+		Registrar todos los residentes de una casa y asignar roles correspondientes
+	Lista negra
+		Visualizar, Agregar y Eliminar residentes
+	Flujo de entrada
+		Visualizar entrada de visitas y residente por medio de una grafica ya sea general o por casa especifica
+	Revocar acceso a encargado del hogar
+		Quitar rol que permita autorizacion de visitantes
+
+Programacion visitas
+	Solicitar visitas al encargado de un hogar
+	Solicitar visitas al administrador del sistema
+	Aprobar solicitudes de visita
+	
+
+Visitas
+	Tiempo de 30 minutos de gracia antes y despues del horario asignado
+	Visualizar horarios de visita
+	Visitas de una sola vez o acceso multiple en un solo dia
+
+
+	

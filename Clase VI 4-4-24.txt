@@ -1,0 +1,12 @@
+REQ FUNC
+    NO FUNC
+
+Modulos
+Diagrama de Flujo
+Modelo de datos
+Diccionario de datos
+
+
+Banco de datos (100 datos)
+	Metodo de paginacion arcaico
+	Primera pagina precargada

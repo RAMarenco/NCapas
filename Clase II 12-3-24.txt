@@ -1,0 +1,129 @@
+Conceptos de desarrollo web.
+
+Web App:
+	- Software accedido desde una red de computadoras.
+	- Alojada en un servidor, y procesada por un servidor Web.
+	- Accecido a través de navegadores web.
+	- Puede comunicarse con otros servicios.
+	- Permite interacción con el usuario.
+
+Servidor Web:
+	- Software.
+	- Procesa peticiones HTTP.
+		- Hipertexto.
+			- Texto Plano.
+			- Texto enrriquecido
+
+Algoritmo
+	1. Pedir la web (URL).
+	2. Enviar al DNS -> IP.
+	3. IP -> Servidor.
+	4. Petición HTTP (web/->respuesta).
+	5. Renderizar
+		- Texto -> Show (HTML/CSS/JS).
+		- HTML -> Render().
+
+Peticiones y respuestas
+	Request
+		- Uri
+		- Headers
+		- Method (HTTP Verb)
+		- Body?
+	
+	Response
+		- Status Code
+		- Headers
+		- Body
+
+	Http Verbs
+		- GET
+		- POST
+		- PUT/PATCH
+		- DELETE
+	
+	HTTP Status
+		- 200
+		- 400
+		- 500
+
+Arquitectura de software
+	- Experto en software que dicta el cómo hacer las cosas.
+	- Diseñan el software a medida del cliente.
+
+	Características:
+		- Conocimiento amnplio de software.
+		- Capacidad para la resolución de problemas.
+		- Habilidades para la comunicación.
+		- Liderazgo.
+		- Conocimiento previo del negocio.
+		- Atención al detalle.
+		- Creatividad.
+
+Tipos de arquitectura:
+	1 Tier Architecture
+		Agrupan todos los componentes del programa localmente en un solo cliente
+	
+		Ventajas
+			- Fácil desarrollo
+			- Costo de desarrollo bajo
+			- Puntos de control más laxos (seguridad, concurrencia)
+		
+		Desventajas
+			- Alto acoplamiento de componentes
+			- Viabilidad empresarial nula
+			- Baja escalabilidad
+			- Documentación excesiva 
+	
+	2 Tier Acrhitecture
+		Los datos se encuentran separados ed la capa de presentación y lógica de negocios.
+		
+		Ventajas:
+			- Es fácil de desarrollar
+			- Permite separar los datos de la vista
+			- Es escalable hasta cierto punto (DB)
+		
+		Desventajas:
+			- Problemas en el despligue
+			- Seguridad comprometida al acceder directamente a los datos
+
+		Reinterpretación
+			Los beneficios de seprarar la lógica de la vista son:
+				- Bajo acoplamiento entre los componentes del cliente
+				- Facilita la detección de errores en el software y mantenimiento
+				- Facilita el cambio de características
+	
+	N-Tier Architecture (3+)
+		Los distintos componentes del software se encuentran separados, tanto lógica como físicamente
+
+		Ventajas:
+			- El desarrollo puede separarse
+			- Los cambios en un componente no afectan al resto
+			- La seguridad se maneja a escala local en cada componentes
+			- Es escalable y flexible
+		
+		Desventajas
+			- Desarrollo y despliegue más costoso
+			- Implica un aumento en la complejidad del software
+			- El rendimiento de la app se puede ver afectado por factores externos
+
+Factores a tomar en cuenta a la hora del desarrollo:
+	Alta Disponibilidad:
+		El software debe permanecer la mayor parte del tiempo disponible para su uso y consumo.
+	
+	Buen Rendimiento:
+		El software debe procurar maximizar la cantidad de peticiones de usuario procesadas con el fin de garantizar la rapidez de consumo y una mejor experiencia de usuario.
+		Además se busca optimizar los algoritmos y procesos lógicos que puedan representar "bottlenecks" en el sistema.
+	
+	Integridad garantizada:
+		El software debe garantizar la coherencia e integridad de los datos que almacena. Esta estabilidad, genera confianza en el usuario al estar utilizando el software.
+
+	Costo regulado:
+		Los costos tanto del hardware como del software, deben de estar adecuados a los requerimientos planteados en el análisis, con el fin de evitar inflación en los presupuestos.
+	
+	Escalabilidad:
+		El software debe de crecer con respecto a las necesidades del negocio. La infraestructura debe ser capaz de escalar tanto vertical como horizontalmente
+			- Vertical: Hace referencia a la potencia del hardware de la aplicación
+			- Horizontal: Hace referencias a la cantidad de servidores
+
+Patrones de diseño
+	Son una solución general, reutilizable y aplicable a diferentes problemas de diseño de software. Están altamente validadas, independientes de lenguaje y evitan caer en el ciclo de reinventar la rueda

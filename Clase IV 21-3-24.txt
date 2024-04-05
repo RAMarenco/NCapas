@@ -1,0 +1,38 @@
+Capa de presentación
+	front, vistas, interacción/UI UX
+
+Capa de aplicación
+	Back, lógica de negocios
+		Controladores
+			Flujo de petición
+				Determina que hacer en un orden es específico
+				
+				Petición->Proceso->Respuesta
+			
+			Server Side Rendering
+				Entrega los datos ya presentados (Mejor para SEO)
+
+			Client Side Rendering
+				Entrega solo los datos a presentar
+					- XML
+					- JSON
+					- Texto
+
+DTO's (Data Transfer Object)
+	- Mover datos
+
+Entidades
+	- No son, exclusivamente, tablas en una DB
+	- Moldear datos
+	- Centro de BL
+
+DTO's y Entidades -> Capa de dominio
+
+@Controller
+@RestController -> Devuelve solo datos
+@RequestMapping
+
+Lombook
+	Inyecta métodos
+
+Pojos -> Clase plana que no tiene lógica de negocios
