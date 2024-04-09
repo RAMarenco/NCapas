@@ -4,6 +4,84 @@
     <meta charset="UTF-8">
     <title>Library</title>
 </head>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        gap: 1.1rem;
+    }
+
+    form {
+        flex: 1;
+        max-width: 350px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        gap: 1.1rem;
+
+        & label {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 1.1rem
+        }
+
+        & input {
+            width: 100%;
+        }
+    }
+
+    form label > input {
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+        outline: none;
+        border: none;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
+
+    table {
+        max-width: max-content;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 4px;
+    }
+
+    #pagination {
+        display: flex;
+        flex-direction: row;
+        gap: 0.75rem;
+    }
+
+    .btn {
+        background: #E1E5EE;
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+        outline: none;
+        border: none;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        transition: 250ms all ease-in-out;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background: #767B91;
+        transform: scale(1.05);
+    }
+
+    .active {
+        background: #C7CCDB;
+    }
+</style>
 <body>
     <a href="/library/all"> Ver todos los libros </a>
     <form action="#" id="save-book-form">
@@ -15,8 +93,11 @@
             Titulo
             <input name="title" id="title-field"/>
         </label>
-        <input type="submit" value="Guardar libro"/>
+        <input type="submit" value="Guardar libro" class="btn"/>
     </form>
+    <div id="pagination">
+
+    </div>
     <table>
         <thead>
         <tr>
@@ -35,7 +116,9 @@
     </table>
     <script>
         const form = document.querySelector("#save-book-form");
-        const table = document.querySelector("#books-container")
+        const table = document.querySelector("#books-container");
+        const pagination = document.querySelector("#pagination");
+        let currentPage = 1;
 
         const createBookChild = (info) => {
             const holder = document.createElement("tr");
@@ -47,13 +130,35 @@
             return holder;
         }
 
-        const fetchBooks = async () => {
+        const fetchAllBooks = async () => {
             const response = await fetch("/api/library/all");
             return await response.json();
         }
 
-        const renderBooks = async () => {
-            const books = await fetchBooks() || [];
+        const fetchBooks = async (pageNumber) => {
+            const response = await fetch(`/api/library/?pageNumber=${pageNumber}`);
+            return await response.json();
+        }
+
+        const fetchPagination = async () => {
+            const response = await fetch(`/api/library/pagination`);
+            return await response.json();
+        }
+
+        const paginationClick = async (e, i) => {
+            if (e.classList.contains("active"))
+                return;
+            const button = document.querySelector(".active");
+            button.classList.remove("active");
+
+            e.classList.add("active");
+            currentPage = i;
+
+            const data = await fetchBooks(i);
+            renderBooks(data);
+        }
+
+        const renderBooks = ({data:books}) => {
             table.innerHTML = "";
 
             books.forEach(b => {
@@ -61,6 +166,42 @@
                     createBookChild(b)
                 )
             })
+        }
+
+        const loadBooks = async () => {
+            const data = await fetchAllBooks();
+            console.log(data);
+            renderBooks(data);
+        }
+
+        const createPagination = async () => {
+            const paginationInfo = await fetchPagination();
+            pagination.innerHTML = "";
+            const all = document.createElement("button");
+            all.innerText = "All";
+            all.classList.add("btn");
+            all.id = "get-all-books";
+            all.onclick = (e) => {
+                currentPage = 0;
+                document.querySelector(".active").classList.remove("active");
+                e.target.classList.add("active");
+                loadBooks();
+            }
+            pagination.appendChild(all);
+
+            for (let i = 1; i <= paginationInfo.totalPages; ++i) {
+                const button = document.createElement("button");
+                button.onclick = (e) => {
+                    paginationClick(e.target, i);
+                }
+                button.classList.add("btn");
+                if (currentPage === i) {
+                    button.classList.add("active");
+                }
+                button.id = `page-${i}`;
+                button.innerText = i;
+                pagination.appendChild(button);
+            }
         }
 
         const saveBook = async () => {
@@ -80,14 +221,17 @@
             })
 
             if (response.ok) {
-                await renderBooks();
+                const responseData = await fetchBooks(currentPage);
+                await renderBooks(responseData);
+                createPagination();
             } else {
                 alert("Error :c");
             }
         }
 
         const main = () => {
-            //renderBooks();
+            //loadBooks();
+            createPagination();
 
             form.addEventListener("submit", (e) => {
                 e.preventDefault();
