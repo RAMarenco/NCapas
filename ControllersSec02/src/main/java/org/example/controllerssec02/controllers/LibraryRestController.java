@@ -6,6 +6,10 @@ import org.example.controllerssec02.domain.entities.Book;
 import org.example.controllerssec02.domain.entities.GeneralResponse;
 import org.example.controllerssec02.domain.entities.PaginatedResponse;
 import org.example.controllerssec02.domain.entities.Pagination;
+import org.example.controllerssec02.services.BookService;
+import org.example.controllerssec02.services.PaginationService;
+import org.example.controllerssec02.services.impls.PaginationServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -16,10 +20,19 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/library")
 public class LibraryRestController {
+    int pageSize = 5;
+
+    private final PaginationService<Book> paginationService;
+    private final BookService bookService;
+
+    public LibraryRestController(PaginationService<Book> paginationService, BookService bookService) {
+        this.paginationService = paginationService;
+        this.bookService = bookService;
+    }
 
     @GetMapping("/all")
     private ResponseEntity<GeneralResponse<Book>> findAll() {
-        GeneralResponse<Book> responseBody = new GeneralResponse<>(LibraryController.books);
+        GeneralResponse<Book> responseBody = new GeneralResponse<>(bookService.findAll());
         return new ResponseEntity<>(
                 responseBody,
                 HttpStatus.OK
@@ -28,9 +41,7 @@ public class LibraryRestController {
 
     @GetMapping("/pagination")
     private ResponseEntity<Pagination> pagination() {
-        int pageSize = 5;
-        int totalBooks = LibraryController.books.size();
-        int totalPages = (int) Math.ceil((double) totalBooks / pageSize);
+        int totalPages = paginationService.getTotalPages(bookService.findAll(), pageSize);
         Pagination pagination = new Pagination(totalPages, pageSize);
 
         return new ResponseEntity<>(
@@ -41,25 +52,13 @@ public class LibraryRestController {
 
     @GetMapping("/")
     private ResponseEntity<PaginatedResponse<Book>> findPage(@RequestParam int pageNumber) {
-        int pageSize = 5;
         if (pageNumber <= 0 || pageSize <= 0)
             return new ResponseEntity<>(
                     HttpStatus.BAD_REQUEST
             );
 
-        int totalBooks = LibraryController.books.size();
-        int totalPages = (int) Math.ceil((double) totalBooks / pageSize);
-
-        if (pageNumber > totalPages) {
-            throw new IllegalArgumentException("Page number exceeds total number of pages.");
-        }
-
-        int startIndex = (pageNumber - 1) * pageSize;
-        int endIndex = Math.min(startIndex + pageSize, LibraryController.books.size());
-
-        List<Book> pageBooks = LibraryController.books.subList(startIndex, endIndex);
-
-        PaginatedResponse<Book> responseBody = new PaginatedResponse<>(pageBooks, pageNumber);
+        List<Book> paginatedData = paginationService.pagination(bookService.findAll(), pageNumber, pageSize);
+        PaginatedResponse<Book> responseBody = new PaginatedResponse<>(paginatedData, pageNumber);
 
         return new ResponseEntity<>(
                 responseBody,
@@ -76,17 +75,7 @@ public class LibraryRestController {
             );
         }
 
-        Book _book = LibraryController.books.stream()
-                .filter(b -> b.getISBN().equals(info.getISBN()))
-                .findAny()
-                .orElse(null);
-
-        if (_book == null) {
-            Book newBook = new Book(info.getISBN(), info.getTitle());
-            LibraryController.books.add(newBook);
-        } else {
-            _book.setTitle(info.getTitle());
-        }
+        bookService.save(info);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

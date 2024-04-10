@@ -170,7 +170,6 @@
 
         const loadBooks = async () => {
             const data = await fetchAllBooks();
-            console.log(data);
             renderBooks(data);
         }
 
@@ -182,6 +181,8 @@
             all.classList.add("btn");
             all.id = "get-all-books";
             all.onclick = (e) => {
+                if (e.target.classList.contains("active"))
+                    return;
                 currentPage = 0;
                 document.querySelector(".active").classList.remove("active");
                 e.target.classList.add("active");
