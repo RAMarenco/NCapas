@@ -8,8 +8,6 @@ import org.example.controllerssec02.domain.entities.PaginatedResponse;
 import org.example.controllerssec02.domain.entities.Pagination;
 import org.example.controllerssec02.services.BookService;
 import org.example.controllerssec02.services.PaginationService;
-import org.example.controllerssec02.services.impls.PaginationServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
