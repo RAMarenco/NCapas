@@ -77,4 +77,16 @@ public class LibraryRestController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @DeleteMapping("/{isbn}")
+    private ResponseEntity<?> deleteByISBN(@PathVariable String isbn) {
+        Book book = bookService.findByISBN(isbn);
+        if (book == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        bookService.deleteByISBN(isbn);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

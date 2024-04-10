@@ -110,6 +110,8 @@
         <tr>
             <td> {{ISBN}} </td>
             <td> {{title}} </td>
+            <td><button onclick="deleteBook('{{ISBN}}')">Borrar</button></td>
+
         </tr>
         {{/books}}
         </tbody>
@@ -120,11 +122,26 @@
         const pagination = document.querySelector("#pagination");
         let currentPage = 1;
 
+        const deleteBook = async (isbn) => {
+            const response = await fetch(`/api/library/${isbn}`, {
+                method: "DELETE",
+            });
+
+            if (response.ok) {
+                const responseData = await fetchBooks(currentPage);
+                await renderBooks(responseData);
+                await createPagination();
+            } else {
+                alert("Book not found");
+            }
+        }
+
         const createBookChild = (info) => {
             const holder = document.createElement("tr");
             holder.innerHTML = `
                 <td> ${info.isbn} </td>
                 <td> ${info.title} </td>
+                <td><button onclick="deleteBook('${info.isbn}')">Borrar</button></td>
             `;
 
             return holder;
@@ -224,7 +241,7 @@
             if (response.ok) {
                 const responseData = await fetchBooks(currentPage);
                 await renderBooks(responseData);
-                createPagination();
+                await createPagination();
             } else {
                 alert("Error :c");
             }
