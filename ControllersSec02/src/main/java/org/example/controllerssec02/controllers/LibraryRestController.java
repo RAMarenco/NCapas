@@ -7,7 +7,7 @@ import org.example.controllerssec02.domain.entities.GeneralResponse;
 import org.example.controllerssec02.domain.entities.PaginatedResponse;
 import org.example.controllerssec02.domain.entities.Pagination;
 import org.example.controllerssec02.services.BookService;
-import org.example.controllerssec02.services.PaginationService;
+import org.example.controllerssec02.utils.PaginationTools;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -20,11 +20,11 @@ import java.util.List;
 public class LibraryRestController {
     int pageSize = 5;
 
-    private final PaginationService<Book> paginationService;
+    private final PaginationTools<Book> paginationTools;
     private final BookService bookService;
 
-    public LibraryRestController(PaginationService<Book> paginationService, BookService bookService) {
-        this.paginationService = paginationService;
+    public LibraryRestController(PaginationTools<Book> paginationTools, BookService bookService) {
+        this.paginationTools = paginationTools;
         this.bookService = bookService;
     }
 
@@ -39,7 +39,7 @@ public class LibraryRestController {
 
     @GetMapping("/pagination")
     private ResponseEntity<Pagination> pagination() {
-        int totalPages = paginationService.getTotalPages(bookService.findAll(), pageSize);
+        int totalPages = paginationTools.getTotalPages(bookService.findAll(), pageSize);
         Pagination pagination = new Pagination(totalPages, pageSize);
 
         return new ResponseEntity<>(
@@ -55,7 +55,7 @@ public class LibraryRestController {
                     HttpStatus.BAD_REQUEST
             );
 
-        List<Book> paginatedData = paginationService.pagination(bookService.findAll(), pageNumber, pageSize);
+        List<Book> paginatedData = paginationTools.pagination(bookService.findAll(), pageNumber, pageSize);
         PaginatedResponse<Book> responseBody = new PaginatedResponse<>(paginatedData, pageNumber);
 
         return new ResponseEntity<>(

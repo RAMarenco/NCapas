@@ -128,7 +128,7 @@
             });
 
             if (response.ok) {
-                const responseData = await fetchBooks(currentPage);
+                const responseData = currentPage < 1 ? await fetchAllBooks() : await fetchBooks(currentPage);
                 await renderBooks(responseData);
                 await createPagination();
             } else {
@@ -194,6 +194,9 @@
             const paginationInfo = await fetchPagination();
             pagination.innerHTML = "";
             const all = document.createElement("button");
+            if (currentPage === 0) {
+                all.classList.add("active");
+            }
             all.innerText = "All";
             all.classList.add("btn");
             all.id = "get-all-books";

@@ -1,12 +1,11 @@
-package org.example.controllerssec02.services.impls;
+package org.example.controllerssec02.utils;
 
-import org.example.controllerssec02.services.PaginationService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class PaginationServiceImpl<T> implements PaginationService<T> {
+public class PaginationTools<T> {
     public int getTotalPages(List<T> data, int pageSize) {
         int totalBooks = data.size();
         return (int) Math.ceil((double) totalBooks / pageSize);
