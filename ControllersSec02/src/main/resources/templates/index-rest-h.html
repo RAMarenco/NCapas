@@ -59,10 +59,13 @@
     #pagination {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
         gap: 0.75rem;
     }
 
     .btn {
+        flex: 1 1 3rem;
+        max-width: 3rem;
         background: #E1E5EE;
         border-radius: 0.5rem;
         padding: 0.5rem 1rem;
@@ -121,6 +124,7 @@
         const table = document.querySelector("#books-container");
         const pagination = document.querySelector("#pagination");
         let currentPage = 1;
+        let activePage;
 
         const deleteBook = async (isbn) => {
             const response = await fetch(`/api/library/${isbn}`, {
@@ -163,10 +167,12 @@
         }
 
         const paginationClick = async (e, i) => {
-            if (e.classList.contains("active"))
+            if (activePage === e)
                 return;
+            activePage = e;
             const button = document.querySelector(".active");
-            button.classList.remove("active");
+            if (button)
+                button.classList.remove("active");
 
             e.classList.add("active");
             currentPage = i;
@@ -201,10 +207,13 @@
             all.classList.add("btn");
             all.id = "get-all-books";
             all.onclick = (e) => {
-                if (e.target.classList.contains("active"))
+                if (e.target === activePage)
                     return;
+                activePage = e.target;
                 currentPage = 0;
-                document.querySelector(".active").classList.remove("active");
+                const button = document.querySelector(".active");
+                if (button)
+                    button.classList.remove("active")
                 e.target.classList.add("active");
                 loadBooks();
             }
