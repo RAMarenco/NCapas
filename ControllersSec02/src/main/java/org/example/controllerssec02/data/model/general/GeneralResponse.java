@@ -1,4 +1,4 @@
-package org.example.controllerssec02.domain.entities;
+package org.example.controllerssec02.data.model.general;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
