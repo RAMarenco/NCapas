@@ -75,7 +75,7 @@ Tipos de arquitectura:
 			- Documentación excesiva 
 	
 	2 Tier Acrhitecture
-		Los datos se encuentran separados ed la capa de presentación y lógica de negocios.
+		Los datos se encuentran separados de la capa de presentación y lógica de negocios.
 		
 		Ventajas:
 			- Es fácil de desarrollar

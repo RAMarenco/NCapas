@@ -24,7 +24,7 @@ DTO's (Data Transfer Object)
 Entidades
 	- No son, exclusivamente, tablas en una DB
 	- Moldear datos
-	- Centro de BL
+	- Centro de logica de negocios
 
 DTO's y Entidades -> Capa de dominio
 
