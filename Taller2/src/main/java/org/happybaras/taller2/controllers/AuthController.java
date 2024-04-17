@@ -90,14 +90,14 @@ public class AuthController {
 
         if (registerStatus == RegisterStatus.EMAIL_EXISTS) {
             return new ResponseEntity<>(
-                    "Bad Request",
+                    "Email already exists",
                     HttpStatus.BAD_REQUEST
             );
         }
 
         if (registerStatus == RegisterStatus.USERNAME_EXISTS) {
             return new ResponseEntity<>(
-                    "Bad Request",
+                    "username already exists",
                     HttpStatus.BAD_REQUEST
             );
         }
