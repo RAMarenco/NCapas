@@ -3,7 +3,9 @@ package org.happybaras.taller2.controllers;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.happybaras.taller2.domain.dtos.LoginDTO;
+import org.happybaras.taller2.domain.dtos.RegisterDTO;
 import org.happybaras.taller2.domain.enums.LoginStatus;
+import org.happybaras.taller2.domain.enums.RegisterStatus;
 import org.happybaras.taller2.services.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,13 +47,6 @@ public class AuthController {
                 );
             }
 
-            if (status == LoginStatus.LOGIN_ERROR) {
-                return new ResponseEntity<>(
-                        "Not a valid identifier",
-                        HttpStatus.UNAUTHORIZED
-                );
-            }
-
             if (status == LoginStatus.NOT_FOUND) {
                 return new ResponseEntity<>(
                         "User not found",
@@ -71,10 +66,42 @@ public class AuthController {
             );
 
         } catch (Exception e) {
+            log.info(e.toString());
             return new ResponseEntity<>(
                     "An unexpected error occurred",
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         }
+    }
+
+    @PostMapping("/register")
+    private ResponseEntity<?> Register(@RequestBody @Valid RegisterDTO registerDTO, BindingResult errors) {
+        if (errors.hasErrors()) {
+            log.info(errors.toString());
+            return new ResponseEntity<>(
+                    "Bad Request",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        RegisterStatus registerStatus = authService.register(registerDTO);
+
+        log.info(registerStatus.toString());
+
+        if (registerStatus == RegisterStatus.EMAIL_EXISTS) {
+            return new ResponseEntity<>(
+                    "Bad Request",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        if (registerStatus == RegisterStatus.USERNAME_EXISTS) {
+            return new ResponseEntity<>(
+                    "Bad Request",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

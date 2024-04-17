@@ -1,9 +1,11 @@
 package org.happybaras.taller2.services.impls;
 
+import lombok.extern.slf4j.Slf4j;
 import org.happybaras.taller2.domain.dtos.LoginDTO;
-import org.happybaras.taller2.domain.dtos.SaveUserDTO;
+import org.happybaras.taller2.domain.dtos.RegisterDTO;
 import org.happybaras.taller2.domain.entities.User;
 import org.happybaras.taller2.domain.enums.LoginStatus;
+import org.happybaras.taller2.domain.enums.RegisterStatus;
 import org.happybaras.taller2.services.AuthService;
 import org.happybaras.taller2.utils.ValidationTools;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class AuthServiceImpl implements AuthService {
     public static List<User> users = new ArrayList<>();
@@ -33,8 +36,24 @@ public class AuthServiceImpl implements AuthService {
         this.validationTools = validationTools;
     }
 
-    public void register(SaveUserDTO data) {
+    public RegisterStatus register(RegisterDTO data) {
+        String username = data.getUsername();
+        String email = data.getEmail();
+        String password = data.getPassword();
 
+        if (findUserName(username) != null) {
+            return RegisterStatus.USERNAME_EXISTS;
+        }
+
+        if (findEmail(email) != null) {
+            return RegisterStatus.EMAIL_EXISTS;
+        }
+
+        User user = new User(email, username, password);
+
+        users.add(user);
+
+        return RegisterStatus.REGISTER_SUCCESSFUL;
     }
 
     public LoginStatus login(LoginDTO data) {
@@ -45,19 +64,28 @@ public class AuthServiceImpl implements AuthService {
             return LoginStatus.NOT_VALID_IDENTIFIER;
         }
 
-        User user = users.stream()
-                .filter(b -> b.getEmail().equals(identifier) || b.getUsername().equals(identifier))
-                .findFirst()
-                .orElse(null);
-
-        if (user == null) {
-            return LoginStatus.LOGIN_ERROR;
+        if (findEmail(identifier) == null && findUserName(identifier) == null) {
+            return LoginStatus.NOT_FOUND;
         }
 
-        if (!user.getPassword().equals(password)) {
+        if (!findUserName(identifier).getPassword().equals(password)) {
             return LoginStatus.WRONG_PASSWORD;
         }
 
         return LoginStatus.LOGIN_SUCCESSFUL;
+    }
+
+    public User findEmail(String email) {
+        return users.stream()
+                .filter(u -> u.getEmail().equals(email))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public User findUserName(String username) {
+        return users.stream()
+                .filter(u -> u.getUsername().equals(username))
+                .findFirst()
+                .orElse(null);
     }
 }

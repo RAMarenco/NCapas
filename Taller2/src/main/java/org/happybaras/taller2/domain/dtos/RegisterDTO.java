@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
-public class SaveUserDTO {
+public class RegisterDTO {
     @NotBlank
     @Email
     String email;
@@ -16,6 +16,6 @@ public class SaveUserDTO {
     String username;
 
     @NotBlank
-    @Pattern(regexp = "^(?=.[a-z])(?=.[A-Z])(?=.*[!#$])[a-zA-Z!#$]{8,32}$")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[!#$])[a-zA-Z!#$]{8,32}$")
     String password;
 }
