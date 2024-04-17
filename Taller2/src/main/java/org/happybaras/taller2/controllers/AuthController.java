@@ -77,35 +77,43 @@ public class AuthController {
 
     @PostMapping("/register")
     private ResponseEntity<?> Register(@RequestBody @Valid RegisterDTO registerDTO, BindingResult errors) {
-        if (errors.hasErrors()) {
-            log.info(errors.toString());
+        try {
+            if (errors.hasErrors()) {
+                log.info(errors.toString());
+                return new ResponseEntity<>(
+                        Map.of("message", "Bad Request"),
+                        HttpStatus.BAD_REQUEST
+                );
+            }
+
+            RegisterStatus registerStatus = authService.register(registerDTO);
+
+            log.info(registerStatus.toString());
+
+            if (registerStatus == RegisterStatus.EMAIL_EXISTS) {
+                return new ResponseEntity<>(
+                        Map.of("message", "Email already exists"),
+                        HttpStatus.BAD_REQUEST
+                );
+            }
+
+            if (registerStatus == RegisterStatus.USERNAME_EXISTS) {
+                return new ResponseEntity<>(
+                        Map.of("message", "Username already exists"),
+                        HttpStatus.BAD_REQUEST
+                );
+            }
+
             return new ResponseEntity<>(
-                    Map.of("message", "Bad Request"),
-                    HttpStatus.BAD_REQUEST
+                    Map.of("message", "Register Successful"),
+                    HttpStatus.CREATED
+            );
+        } catch (Exception e) {
+            log.info(e.toString());
+            return new ResponseEntity<>(
+                    Map.of("message", "An unexpected error occurred"),
+                    HttpStatus.INTERNAL_SERVER_ERROR
             );
         }
-
-        RegisterStatus registerStatus = authService.register(registerDTO);
-
-        log.info(registerStatus.toString());
-
-        if (registerStatus == RegisterStatus.EMAIL_EXISTS) {
-            return new ResponseEntity<>(
-                    Map.of("message", "Email already exists"),
-                    HttpStatus.BAD_REQUEST
-            );
-        }
-
-        if (registerStatus == RegisterStatus.USERNAME_EXISTS) {
-            return new ResponseEntity<>(
-                    Map.of("message", "Username already exists"),
-                    HttpStatus.BAD_REQUEST
-            );
-        }
-
-        return new ResponseEntity<>(
-                Map.of("message", "Register Successful"),
-                HttpStatus.CREATED
-        );
     }
 }
