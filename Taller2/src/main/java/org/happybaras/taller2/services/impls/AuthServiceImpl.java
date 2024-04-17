@@ -64,11 +64,13 @@ public class AuthServiceImpl implements AuthService {
             return LoginStatus.NOT_VALID_IDENTIFIER;
         }
 
-        if (findEmail(identifier) == null && findUserName(identifier) == null) {
+        User user = findEmail(identifier) != null ? findEmail(identifier) : findUserName(identifier);
+
+        if (user == null) {
             return LoginStatus.NOT_FOUND;
         }
 
-        if (!findUserName(identifier).getPassword().equals(password)) {
+        if (!user.getPassword().equals(password)) {
             return LoginStatus.WRONG_PASSWORD;
         }
 

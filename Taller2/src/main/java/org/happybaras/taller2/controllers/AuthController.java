@@ -10,12 +10,12 @@ import org.happybaras.taller2.services.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Slf4j
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -33,7 +33,7 @@ public class AuthController {
                 log.info("Hay errores");
                 log.info(errors.toString());
                 return new ResponseEntity<>(
-                        "Bad Request",
+                        Map.of("message", "Bad Request"),
                         HttpStatus.BAD_REQUEST
                 );
             }
@@ -42,33 +42,34 @@ public class AuthController {
 
             if (status == LoginStatus.NOT_VALID_IDENTIFIER) {
                 return new ResponseEntity<>(
-                        "Not a valid identifier",
+                        Map.of("message", "Not a valid identifier"),
                         HttpStatus.UNAUTHORIZED
                 );
             }
 
             if (status == LoginStatus.NOT_FOUND) {
                 return new ResponseEntity<>(
-                        "User not found",
+                        Map.of("message", "User not found"),
                         HttpStatus.NOT_FOUND
                 );
             }
 
             if (status == LoginStatus.WRONG_PASSWORD) {
                 return new ResponseEntity<>(
-                        "Wrong Password",
+                        Map.of("message", "Wrong password"),
                         HttpStatus.UNAUTHORIZED
                 );
             }
 
             return new ResponseEntity<>(
+                    Map.of("message", "Login Successful"),
                     HttpStatus.OK
             );
 
         } catch (Exception e) {
             log.info(e.toString());
             return new ResponseEntity<>(
-                    "An unexpected error occurred",
+                    Map.of("message", "An unexpected error occurred"),
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         }
@@ -79,7 +80,7 @@ public class AuthController {
         if (errors.hasErrors()) {
             log.info(errors.toString());
             return new ResponseEntity<>(
-                    "Bad Request",
+                    Map.of("message", "Bad Request"),
                     HttpStatus.BAD_REQUEST
             );
         }
@@ -90,18 +91,21 @@ public class AuthController {
 
         if (registerStatus == RegisterStatus.EMAIL_EXISTS) {
             return new ResponseEntity<>(
-                    "Email already exists",
+                    Map.of("message", "Email already exists"),
                     HttpStatus.BAD_REQUEST
             );
         }
 
         if (registerStatus == RegisterStatus.USERNAME_EXISTS) {
             return new ResponseEntity<>(
-                    "username already exists",
+                    Map.of("message", "Username already exists"),
                     HttpStatus.BAD_REQUEST
             );
         }
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(
+                Map.of("message", "Register Successful"),
+                HttpStatus.CREATED
+        );
     }
 }
