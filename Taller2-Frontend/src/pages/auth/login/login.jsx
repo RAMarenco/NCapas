@@ -87,7 +87,7 @@ const Login = () => {
                 />
                 <Button type="submit">Login</Button>
             </form>
-            <p className={classes["Bottom-Text"]}>Don't have an account? <Link to="/auth/register">Login</Link></p>
+            <p className={classes["Bottom-Text"]}>Already have an account? <Link to="/auth/register">Register</Link></p>
         </>
     );
 };
