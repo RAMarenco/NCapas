@@ -1,6 +1,5 @@
 package org.happybaras.taller2.domain.dtos;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
@@ -8,7 +7,7 @@ import lombok.Data;
 @Data
 public class RegisterDTO {
     @NotBlank
-    @Email
+    @Pattern(regexp = "^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,}$")
     String email;
 
     @NotBlank
