@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Input from "./../../../components/input/input";
 import Button from "./../../../components/button/button";
@@ -78,13 +79,15 @@ const Register = () => {
                     type="text"
                     value={data.email}
                     label="Email"
+                    placeholder="example@mail.com"
                     onChange={(e) => handleOnChange(e)}
                 />
                 <Input
                     name="username"
                     type="text"
                     value={data.username}
-                    label="Username"
+                    label="User"
+                    placeholder="johndoe"
                     onChange={(e) => handleOnChange(e)}
                 />
                 <Input
@@ -92,10 +95,12 @@ const Register = () => {
                     type="password"
                     value={data.password}
                     label="Password"
+                    placeholder="********"
                     onChange={(e) => handleOnChange(e)}
                 />
                 <Button type="submit">Register</Button>
             </form>
+            <p className={classes["Bottom-Text"]}>Already have an account? <Link to="/auth">Register</Link></p>
         </>
     );
 };

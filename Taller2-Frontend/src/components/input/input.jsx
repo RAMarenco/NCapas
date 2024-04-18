@@ -1,6 +1,6 @@
 import classes from "./input.module.scss";
 
-const Input = ({ name, label, type, value, onChange: handleOnChange }) => {
+const Input = ({ name, label, type, value, placeholder, onChange: handleOnChange }) => {
     return (
         <>
             <label htmlFor={name} className={classes["Input"]}>
@@ -9,6 +9,7 @@ const Input = ({ name, label, type, value, onChange: handleOnChange }) => {
                     name={name}
                     value={value}
                     type={type}
+                    placeholder={placeholder}
                     onChange={handleOnChange}
                 />
             </label>

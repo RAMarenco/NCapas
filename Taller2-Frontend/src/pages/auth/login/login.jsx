@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Input from "./../../../components/input/input";
 import Button from "./../../../components/button/button";
@@ -72,6 +73,7 @@ const Login = () => {
                     name="identifier"
                     type="text"
                     label="Identifier"
+                    placeholder="Type your email or username"
                     value={data.identifier}
                     onChange={(e) => handleOnChange(e)}
                 />
@@ -79,11 +81,13 @@ const Login = () => {
                     name="password"
                     type="password"
                     label="Password"
+                    placeholder="********"
                     value={data.password}
                     onChange={(e) => handleOnChange(e)}
                 />
                 <Button type="submit">Login</Button>
             </form>
+            <p className={classes["Bottom-Text"]}>Don't have an account? <Link to="/auth/register">Login</Link></p>
         </>
     );
 };
