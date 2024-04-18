@@ -1,15 +1,15 @@
 .Button {
-    background-color: #fff;
+    background-color: #6374ae;
     padding: 0.75rem 1.5rem;
     border: none;
-    outline: 2px solid #6a7fc1;
-    color: #6a7fc1;
+    color: white;
+    font-weight: bold;
     border-radius: 0.75rem;
     transition: all 250ms ease-in-out;
 
     &:hover {
-        outline-color:#6374ae;
-        color: #6374ae;
+        color: white;
         cursor: pointer;
+        background-color: #4d5f9c;
     }
 }

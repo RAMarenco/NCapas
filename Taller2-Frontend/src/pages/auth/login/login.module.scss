@@ -3,4 +3,19 @@
     flex-direction: column;
     gap: 2rem;
     padding: 3rem;
+    padding-bottom: 1.5rem;
+}
+
+p.Bottom-Text {
+    text-align: center;
+    font-size: 0.95rem;
+
+    a {
+        color: black;
+        font-weight: bold;
+
+        &:hover {
+            color: rgb(60, 60, 60);
+        }
+    }
 }

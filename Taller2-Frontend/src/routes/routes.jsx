@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import AuthLayout from "../layouts/auth/AuthLayout";
 import Login from "./../pages/auth/login/login";
 import Register from "./../pages/auth/register/register";
+import NotFound from "../pages/notFound/NotFound";
 
 const Routes = [
     {
@@ -28,7 +29,7 @@ const Routes = [
     },
     {
         path: "*",
-        element: <h1>errorsito</h1>,
+        element: <NotFound/>,
     },
 ];
 
