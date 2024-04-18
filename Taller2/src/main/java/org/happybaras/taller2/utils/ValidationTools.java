@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 @Component
 public class ValidationTools {
-    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,}$");
     private static final Pattern USERNAME_PATTERN = Pattern.compile("^[a-z]{4,16}$");
 
     public Boolean isValidUsername(String username) {
