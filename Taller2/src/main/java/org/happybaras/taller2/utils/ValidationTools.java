@@ -18,13 +18,6 @@ public class ValidationTools {
     }
 
     public Boolean isValidIdentifier(String identifier) {
-        int count = 0;
-
-        if(!isValidEmail(identifier))
-            count++;
-        if(!isValidUsername(identifier))
-            count++;
-
-        return 2 != count;
+        return isValidEmail(identifier) || isValidUsername(identifier);
     }
 }
