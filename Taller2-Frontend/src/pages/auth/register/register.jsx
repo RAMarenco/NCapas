@@ -100,7 +100,7 @@ const Register = () => {
                 />
                 <Button type="submit">Register</Button>
             </form>
-            <p className={classes["Bottom-Text"]}>Don't have an account? <Link to="/auth/login">Login</Link></p>
+            <p className={classes["Bottom-Text"]}>Already have an account? <Link to="/auth/login">Login</Link></p>
         </>
     );
 };
