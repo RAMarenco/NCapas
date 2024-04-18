@@ -1,9 +1,9 @@
 import { Navigate } from "react-router-dom";
-
 import AuthLayout from "../layouts/auth/AuthLayout";
 import Login from "./../pages/auth/login/login";
 import Register from "./../pages/auth/register/register";
 import NotFound from "../pages/notFound/NotFound";
+import { ProtectedRoute } from "../components/ProtectedRoute";
 
 const Routes = [
     {
@@ -28,8 +28,17 @@ const Routes = [
         ],
     },
     {
+        element: <ProtectedRoute />,
+        children: [
+            {
+                path: "/dashboard",
+                element: <>Dashboard</>,
+            },
+        ],
+    },
+    {
         path: "*",
-        element: <NotFound/>,
+        element: <NotFound />,
     },
 ];
 

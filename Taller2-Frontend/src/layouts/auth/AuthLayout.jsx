@@ -12,7 +12,11 @@ const AuthLayout = () => {
             <ToastContainer />
             <div className={classes["Auth-Container"]}>
                 <div className={classes["Form-Container"]}>
-                    <h1 className={classes["Title-Text"]}>{location.pathname === '/auth/login' ? 'Login' : 'Register'}</h1>
+                    <h1 className={classes["Title-Text"]}>
+                        {location.pathname === "/auth/login"
+                            ? "Login"
+                            : "Register"}
+                    </h1>
                     <Outlet />
                 </div>
             </div>
