@@ -1,11 +1,15 @@
-import classes from "./button.module.scss"
+import classes from "./button.module.scss";
 
-const Button = ({onSubmit: handleClick, children, type}) => {
+const Button = ({ onSubmit: handleClick, children, type }) => {
     return (
-        <button onSubmit={handleClick} type={type} className={classes["Button"]}>
+        <button
+            onSubmit={handleClick}
+            type={type}
+            className={classes["Button"]}
+        >
             {children}
         </button>
-    )
-}
+    );
+};
 
-export default Button
+export default Button;

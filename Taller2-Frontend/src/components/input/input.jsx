@@ -1,14 +1,19 @@
-import classes from "./input.module.scss"
+import classes from "./input.module.scss";
 
-const Input = ({name, label, type, onChange: handleOnChange}) => {
+const Input = ({ name, label, type, value, onChange: handleOnChange }) => {
     return (
         <>
             <label htmlFor={name} className={classes["Input"]}>
                 {label}
-                <input name={name} type={type} onChange={handleOnChange}/>
+                <input
+                    name={name}
+                    value={value}
+                    type={type}
+                    onChange={handleOnChange}
+                />
             </label>
         </>
-    )
-}
+    );
+};
 
-export default Input
+export default Input;

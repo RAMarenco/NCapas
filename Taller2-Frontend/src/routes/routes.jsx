@@ -1,8 +1,8 @@
-import { Navigate } from "react-router-dom"
+import { Navigate } from "react-router-dom";
 
-import AuthLayout from "../layouts/auth/AuthLayout"
-import Login from "./../pages/auth/login/login"
-import Register from "./../pages/auth/register/register"
+import AuthLayout from "../layouts/auth/AuthLayout";
+import Login from "./../pages/auth/login/login";
+import Register from "./../pages/auth/register/register";
 
 const Routes = [
     {
@@ -14,22 +14,22 @@ const Routes = [
     },
     {
         path: "/auth",
-        element: <AuthLayout/>,
+        element: <AuthLayout />,
         children: [
             {
                 path: "register",
-                element: <Register/>
+                element: <Register />,
             },
             {
                 path: "login",
-                element: <Login/>
-            }
+                element: <Login />,
+            },
         ],
     },
     {
         path: "*",
-        element: <h1>errorsito</h1>
-    }
-]
+        element: <h1>errorsito</h1>,
+    },
+];
 
-export default Routes
+export default Routes;
