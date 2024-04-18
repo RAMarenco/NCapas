@@ -9,7 +9,6 @@ import org.happybaras.taller2.domain.enums.RegisterStatus;
 import org.happybaras.taller2.services.AuthService;
 import org.happybaras.taller2.utils.ValidationTools;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
