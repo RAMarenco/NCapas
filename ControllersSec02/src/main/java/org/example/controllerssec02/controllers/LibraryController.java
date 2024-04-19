@@ -55,6 +55,4 @@ public class LibraryController {
 
         return "redirect:/library/all";
     }
-
-
 }

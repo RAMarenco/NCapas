@@ -3,11 +3,13 @@ package org.example.controllerssec02.controllers;
 import jakarta.validation.Valid;
 import org.example.controllerssec02.domain.dtos.SaveBookDTO;
 import org.example.controllerssec02.domain.entities.Book;
-import org.example.controllerssec02.data.model.general.GeneralResponse;
-import org.example.controllerssec02.data.model.pagination.PaginatedResponse;
+import org.example.controllerssec02.domain.dtos.GeneralResponse;
+import org.example.controllerssec02.domain.dtos.PaginatedResponse;
 import org.example.controllerssec02.domain.entities.Pagination;
 import org.example.controllerssec02.services.BookService;
+import org.example.controllerssec02.utils.ErrorMapper;
 import org.example.controllerssec02.utils.PaginationTools;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -23,18 +25,17 @@ public class LibraryRestController {
     private final PaginationTools<Book> paginationTools;
     private final BookService bookService;
 
-    public LibraryRestController(PaginationTools<Book> paginationTools, BookService bookService) {
+    public LibraryRestController(PaginationTools<Book> paginationTools, BookService bookService, ErrorMapper errorMapper) {
         this.paginationTools = paginationTools;
         this.bookService = bookService;
     }
 
     @GetMapping("/all")
-    private ResponseEntity<GeneralResponse<Book>> findAll() {
-        GeneralResponse<Book> responseBody = new GeneralResponse<>(bookService.findAll());
-        return new ResponseEntity<>(
-                responseBody,
-                HttpStatus.OK
-        );
+    private ResponseEntity<GeneralResponse> findAll() {
+        return GeneralResponse.getResponse(
+                HttpStatus.OK,
+                "Book List Found!",
+                bookService.findAll());
     }
 
     @GetMapping("/pagination")
@@ -49,44 +50,38 @@ public class LibraryRestController {
     }
 
     @GetMapping("/")
-    private ResponseEntity<PaginatedResponse<Book>> findPage(@RequestParam int pageNumber) {
+    private ResponseEntity<PaginatedResponse> findPage(@RequestParam int pageNumber) {
         if (pageNumber <= 0 || pageSize <= 0)
             return new ResponseEntity<>(
                     HttpStatus.BAD_REQUEST
             );
 
         List<Book> paginatedData = paginationTools.pagination(bookService.findAll(), pageNumber, pageSize);
-        PaginatedResponse<Book> responseBody = new PaginatedResponse<>(paginatedData, pageNumber);
 
-        return new ResponseEntity<>(
-                responseBody,
-                HttpStatus.OK
+        return PaginatedResponse.getResponse(
+                HttpStatus.OK,
+                "List found",
+                paginatedData,
+                pageNumber
         );
     }
 
     @PostMapping("/save")
-    private ResponseEntity<?> save(@RequestBody @Valid SaveBookDTO info, BindingResult errors) {
-        if (errors.hasErrors()) {
-            return new ResponseEntity<>(
-                    "Bad Request",
-                    HttpStatus.BAD_REQUEST
-            );
-        }
-
+    private ResponseEntity<?> save(@RequestBody @Valid SaveBookDTO info) {
         bookService.save(info);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return GeneralResponse.getResponse("Book Saved!");
     }
 
     @DeleteMapping("/{isbn}")
     private ResponseEntity<?> deleteByISBN(@PathVariable String isbn) {
         Book book = bookService.findByISBN(isbn);
         if (book == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return GeneralResponse.getResponse(HttpStatus.NOT_FOUND, "Book not found!");
         }
 
         bookService.deleteByISBN(isbn);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return GeneralResponse.getResponse("Book Deleted!");
     }
 }
