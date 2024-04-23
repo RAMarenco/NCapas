@@ -1,5 +1,6 @@
 package org.happybaras.taller2.utils;
 
+import org.happybaras.taller2.domain.dtos.GeneralResponse;
 import org.happybaras.taller2.domain.enums.LoginStatus;
 import org.happybaras.taller2.domain.enums.RegisterStatus;
 import org.springframework.http.HttpStatus;
@@ -10,18 +11,18 @@ import java.util.Map;
 public class AuthUtils {
     public static ResponseEntity<?> getLoginResponse(LoginStatus status) {
         return switch (status) {
-            case NOT_VALID_IDENTIFIER -> new ResponseEntity<>(Map.of("message", "Not a valid identifier"), HttpStatus.UNAUTHORIZED);
-            case NOT_FOUND -> new ResponseEntity<>(Map.of("message", "User not found"), HttpStatus.NOT_FOUND);
-            case WRONG_PASSWORD -> new ResponseEntity<>(Map.of("message", "Wrong password"), HttpStatus.UNAUTHORIZED);
-            case LOGIN_SUCCESSFUL -> new ResponseEntity<>(Map.of("message", "Login successful"), HttpStatus.OK);
+            case NOT_VALID_IDENTIFIER -> GeneralResponse.builder().status(HttpStatus.UNAUTHORIZED).message("Not a valid identifier").getResponse();
+            case NOT_FOUND -> GeneralResponse.builder().message("User not found").status(HttpStatus.NOT_FOUND).getResponse();
+            case WRONG_PASSWORD -> GeneralResponse.builder().message("Wrong password").status(HttpStatus.UNAUTHORIZED).getResponse();
+            case LOGIN_SUCCESSFUL -> GeneralResponse.builder().message("Login succesful").getResponse();
         };
     }
 
     public static ResponseEntity<?> getRegisterResponse(RegisterStatus status) {
         return switch (status) {
-            case EMAIL_EXISTS -> new ResponseEntity<>(Map.of("message", "Email already exists"), HttpStatus.BAD_REQUEST);
-            case USERNAME_EXISTS -> new ResponseEntity<>(Map.of("message", "Username already exists"), HttpStatus.BAD_REQUEST);
-            case REGISTER_SUCCESSFUL -> new ResponseEntity<>(Map.of("message", "Register successful"), HttpStatus.CREATED);
+            case EMAIL_EXISTS -> GeneralResponse.builder().message("Email already exists").status(HttpStatus.BAD_REQUEST).getResponse();
+            case USERNAME_EXISTS -> GeneralResponse.builder().message("Username already exists").status(HttpStatus.BAD_REQUEST).getResponse();
+            case REGISTER_SUCCESSFUL -> GeneralResponse.builder().message("Register succesful").status(HttpStatus.CREATED).getResponse();
         };
     }
 }
