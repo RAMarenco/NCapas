@@ -2,6 +2,7 @@ package org.happybaras.taller2.controllers;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.happybaras.taller2.domain.dtos.GeneralResponse;
 import org.happybaras.taller2.domain.dtos.LoginDTO;
 import org.happybaras.taller2.domain.dtos.RegisterDTO;
 import org.happybaras.taller2.domain.enums.LoginStatus;
@@ -30,10 +31,15 @@ public class AuthController {
     @PostMapping("/login")
     private ResponseEntity<?> Login(@RequestBody @Valid LoginDTO loginDTO, BindingResult errors) {
         if (errors.hasErrors()) {
-            return new ResponseEntity<>(
+            /* return new ResponseEntity<>(
                     Map.of("message", "Bad Request"),
                     HttpStatus.BAD_REQUEST
-            );
+            ); */
+            return GeneralResponse
+                    .builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .message("Bad Request")
+                    .getResponse();
         }
 
         LoginStatus status = authService.login(loginDTO);
@@ -43,10 +49,15 @@ public class AuthController {
     @PostMapping("/register")
     private ResponseEntity<?> Register(@RequestBody @Valid RegisterDTO registerDTO, BindingResult errors) {
         if (errors.hasErrors()) {
-            return new ResponseEntity<>(
+            /* return new ResponseEntity<>(
                     Map.of("message", "Bad Request"),
                     HttpStatus.BAD_REQUEST
-            );
+            ); */
+            return GeneralResponse
+                    .builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .message("Bad Request")
+                    .getResponse();
         }
 
         RegisterStatus registerStatus = authService.register(registerDTO);
