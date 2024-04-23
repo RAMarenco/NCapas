@@ -14,7 +14,7 @@ public class AuthUtils {
             case NOT_VALID_IDENTIFIER -> GeneralResponse.builder().status(HttpStatus.UNAUTHORIZED).message("Not a valid identifier").getResponse();
             case NOT_FOUND -> GeneralResponse.builder().message("User not found").status(HttpStatus.NOT_FOUND).getResponse();
             case WRONG_PASSWORD -> GeneralResponse.builder().message("Wrong password").status(HttpStatus.UNAUTHORIZED).getResponse();
-            case LOGIN_SUCCESSFUL -> GeneralResponse.builder().message("Login succesful").getResponse();
+            case LOGIN_SUCCESSFUL -> GeneralResponse.builder().message("Login successful").getResponse();
         };
     }
 
@@ -22,7 +22,7 @@ public class AuthUtils {
         return switch (status) {
             case EMAIL_EXISTS -> GeneralResponse.builder().message("Email already exists").status(HttpStatus.BAD_REQUEST).getResponse();
             case USERNAME_EXISTS -> GeneralResponse.builder().message("Username already exists").status(HttpStatus.BAD_REQUEST).getResponse();
-            case REGISTER_SUCCESSFUL -> GeneralResponse.builder().message("Register succesful").status(HttpStatus.CREATED).getResponse();
+            case REGISTER_SUCCESSFUL -> GeneralResponse.builder().message("Register successful").status(HttpStatus.CREATED).getResponse();
         };
     }
 }
