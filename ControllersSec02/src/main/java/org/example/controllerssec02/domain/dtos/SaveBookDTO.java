@@ -12,4 +12,8 @@ public class SaveBookDTO {
 
     @NotBlank
     private String title;
+
+    @NotBlank
+    @Pattern(regexp = "^CT_[A-Z]{3}$")
+    private String category;
 }

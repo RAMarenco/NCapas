@@ -2,6 +2,7 @@ package org.example.controllerssec02.controllers;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.example.controllerssec02.domain.dtos.CategoryDTO;
 import org.example.controllerssec02.domain.dtos.SaveBookDTO;
 import org.example.controllerssec02.domain.entities.Book;
 import org.example.controllerssec02.domain.dtos.GeneralResponse;
@@ -73,7 +74,13 @@ public class LibraryRestController {
 
     @PostMapping("/save")
     private ResponseEntity<?> save(@RequestBody @Valid SaveBookDTO info) {
-        bookService.save(info);
+        Category category = categoryService.findCategoryById(info.getCategory());
+
+        if (category == null) {
+            return GeneralResponse.getResponse(HttpStatus.NOT_FOUND);
+        }
+
+        bookService.save(info, category);
 
         return GeneralResponse.getResponse("Book Saved!");
     }
@@ -106,5 +113,12 @@ public class LibraryRestController {
         }
 
         return GeneralResponse.getResponse(HttpStatus.OK,"Category Found", category);
+    }
+
+    @PostMapping("/category")
+    private ResponseEntity<?> saveCategory(@RequestBody @Valid CategoryDTO info) {
+        categoryService.save(info);
+
+        return GeneralResponse.getResponse("Category Saved!");
     }
 }

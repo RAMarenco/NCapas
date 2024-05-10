@@ -35,11 +35,12 @@ public class LibraryController {
 
     @GetMapping("/rest")
     private String restPage(Model model) {
-        model.addAttribute("books", bookService.findAll().subList(0,5));
+        //
+        // model.addAttribute("books", bookService.findAll().subList(0,5));
         return "index-rest-h";
     }
 
-    @PostMapping("/save")
+    /*@PostMapping("/save")
     private String saveBook(@ModelAttribute @Valid SaveBookDTO info, BindingResult errors) {
         //log.info(info.toString());
 
@@ -54,5 +55,5 @@ public class LibraryController {
         bookService.save(info);
 
         return "redirect:/library/all";
-    }
+    }*/
 }

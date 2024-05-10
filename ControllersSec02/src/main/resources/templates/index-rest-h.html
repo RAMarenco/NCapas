@@ -100,6 +100,11 @@
             Titulo
             <input name="title" id="title-field"/>
         </label>
+        <label>
+            Categoria
+        </label>
+        <select name="category" id="categories-selector">
+        </select>
         <input type="submit" value="Guardar libro" class="btn"/>
     </form>
     <div id="pagination">
@@ -110,13 +115,15 @@
         <tr>
             <th> ISBN </th>
             <th> Title </th>
+            <th> Category </th>
         </tr>
         </thead>
         <tbody id="books-container">
         {{#books}}
         <tr>
-            <td> {{ISBN}} </td>
+            <!--<td> {{ISBN}} </td>
             <td> {{title}} </td>
+            <td>  </td>-->
             <td><button onclick="deleteBook('{{ISBN}}')">Borrar</button></td>
 
         </tr>
@@ -126,9 +133,15 @@
     <script>
         const form = document.querySelector("#save-book-form");
         const table = document.querySelector("#books-container");
+        const selectCategory = document.querySelector("#categories-selector");
         const pagination = document.querySelector("#pagination");
         let currentPage = 1;
         let activePage;
+
+        const fetchCategories = async () => {
+            const response = await fetch("/api/library/categories")
+            return await response.json()
+        }
 
         const deleteBook = async (isbn) => {
             const response = await fetch(`/api/library/${isbn}`, {
@@ -149,6 +162,7 @@
             holder.innerHTML = `
                 <td> ${info.isbn} </td>
                 <td> ${info.title} </td>
+                <td> ${info.category.name} </td>
                 <td><button onclick="deleteBook('${info.isbn}')">Borrar</button></td>
             `;
 
@@ -243,7 +257,8 @@
 
             const book = {
                 isbn: data.get("ISBN"),
-                title: data.get("title")
+                title: data.get("title"),
+                category: data.get("category")
             }
 
             const response = await fetch("/api/library/save", {
@@ -263,9 +278,17 @@
             }
         }
 
-        const main = () => {
-            //loadBooks();
+        const main = async () => {
+            const categories = (await fetchCategories() || [])
+            categories.data.forEach((cat) =>{
+                const option = document.createElement("option")
+                option.textContent = cat.name
+                option.value = cat.code
+                selectCategory.appendChild(option)
+
+            })
             createPagination();
+            loadBooks();
 
             form.addEventListener("submit", (e) => {
                 e.preventDefault();

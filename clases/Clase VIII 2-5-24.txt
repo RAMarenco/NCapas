@@ -1,0 +1,38 @@
+Como almacenamos los datos?
+
+- Colecciones o mapas de datos: Forma volatil y temporal, que reincia su estado cada vez que se reinicia el servicio.
+
+- Archivoc: Forma dependiente del dispositivo en el que se ejecuta el servicio. Es comun que el manejo de la estructura y distribucion sea manual y recaiga sobre el mismo servicio.
+
+- Base de datos: Forma que permite administrar los datos de forma mas estructurada, y no depende en su totaliadd de un servidor especifico (accesos remotos).
+
+Servicio Web <-> Sistema Gestor de DB <-> Bases de datos
+
+Gestor a utilizar
+
+PostgresSQL
+
+Java Database Connectivity AKA JDBC
+
+Es una API, que permite la ejecucion de operaciones SQL sobre un gestor especifico, desde el lenguaje de programacion Java.
+
+A partir de JDBC se han desarrollado diferentes API's especificas para cada gestor de bases de datos en particular.
+
+Object Relational Mapping AKA ORM
+
+Los ORM son librerias o API's que permiten mapear las estructuras de la base de datos relacional, a objetos facilmente manipulables por el lenguaje de programacion que se esta utilizando.
+
+Provee una capa de abstraccion a los datos, y facilita todos los procesos de interaccion con el gestor de la base de datos.
+
+Java Persistence API AKA JPA
+
+Es un API diseñada para aplicar el patron ORM en la manipulacion de datos dentro de aplicaciones Java EE o Java SE. Simplifica enormemente estas interacciones, proporcionando metodos e implementaciones que generan un estandar de correlacion explicito entre las estructuras de la base de datos y los objetos.
+
+Este estandar es aplicaciones a traves de interfaces y anotaciones, que proveen los metodos mas comunes al momento de gestionar una DB, y permite crear nuevas consultas o procesos, de forma facil y limpia.
+
+Hibernate
+
+Es un ORM de calibre empresarial.
+
+Universaly Unique Identifiers (UUID)
+
