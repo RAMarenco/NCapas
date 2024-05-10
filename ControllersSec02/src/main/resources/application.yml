@@ -1,0 +1,21 @@
+#spring.application.name=ControllersSec02
+#spring.mustache.suffix=.html
+spring:
+  application:
+    name: ControllersSec02
+  mustache:
+    suffix: .html
+  datasource:
+    url: jdbc:postgresql://localhost:5500/library
+    username: postgres
+    password: P0k3M0n-212@#$
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+  sql:
+    init:
+      mode: always

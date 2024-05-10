@@ -1,33 +1,38 @@
 package org.example.controllerssec02.controllers;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.example.controllerssec02.domain.dtos.SaveBookDTO;
 import org.example.controllerssec02.domain.entities.Book;
 import org.example.controllerssec02.domain.dtos.GeneralResponse;
 import org.example.controllerssec02.domain.dtos.PaginatedResponse;
+import org.example.controllerssec02.domain.entities.Category;
 import org.example.controllerssec02.domain.entities.Pagination;
 import org.example.controllerssec02.services.BookService;
+import org.example.controllerssec02.services.CategoryService;
 import org.example.controllerssec02.utils.ErrorMapper;
 import org.example.controllerssec02.utils.PaginationTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/library")
+@Slf4j
 public class LibraryRestController {
     int pageSize = 5;
 
     private final PaginationTools<Book> paginationTools;
     private final BookService bookService;
+    public final CategoryService categoryService;
 
-    public LibraryRestController(PaginationTools<Book> paginationTools, BookService bookService, ErrorMapper errorMapper) {
+    public LibraryRestController(PaginationTools<Book> paginationTools, BookService bookService, ErrorMapper errorMapper, CategoryService categoryService) {
         this.paginationTools = paginationTools;
         this.bookService = bookService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/all")
@@ -83,5 +88,23 @@ public class LibraryRestController {
         bookService.deleteByISBN(isbn);
 
         return GeneralResponse.getResponse("Book Deleted!");
+    }
+
+    @GetMapping("/categories")
+    private ResponseEntity<GeneralResponse> findAllCategories() {
+        return GeneralResponse.getResponse(categoryService.findAllCategories());
+    }
+
+    @GetMapping("/category/{id}")
+    private ResponseEntity<GeneralResponse> findCategoryById(@PathVariable String id) {
+        String search = id.toUpperCase();
+
+        Category category = categoryService.findCategoryById(search);
+
+        if (category == null) {
+            return GeneralResponse.getResponse(HttpStatus.NOT_FOUND, "Category not found!");
+        }
+
+        return GeneralResponse.getResponse(HttpStatus.OK,"Category Found", category);
     }
 }
